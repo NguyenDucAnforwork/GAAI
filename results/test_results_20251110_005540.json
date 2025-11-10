@@ -1,0 +1,14 @@
+{
+  "accuracy": 1.0,
+  "results": [
+    {
+      "task_id": "e1fc63a2-da7a-432f-be78-7c4a95598703",
+      "question": "If Eliud Kipchoge could maintain his record-making marathon pace indefinitely, how many thousand hours would it take him to run the distance between the Earth and the Moon its closest approach? Please use the minimum perigee value on the Wikipedia page for the Moon when carrying out your calculation. Round your result to the nearest 1000 hours and do not use any comma separators if necessary.",
+      "expected": "17",
+      "predicted": "17000",
+      "response": "FINAL ANSWER: 17000",
+      "elapsed_time": 46.99439859390259,
+      "is_correct": true
+    }
+  ]
+}

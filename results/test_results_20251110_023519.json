@@ -1,0 +1,14 @@
+{
+  "accuracy": 0.0,
+  "results": [
+    {
+      "task_id": "e1fc63a2-da7a-432f-be78-7c4a95598703",
+      "question": "If Eliud Kipchoge could maintain his record-making marathon pace indefinitely, how many thousand hours would it take him to run the distance between the Earth and the Moon its closest approach? Please use the minimum perigee value on the Wikipedia page for the Moon when carrying out your calculation. Round your result to the nearest 1000 hours and do not use any comma separators if necessary.",
+      "expected": "17",
+      "predicted": "",
+      "response": "Error processing query: Error code: 400 - {'error': {'message': \"Unsupported value: 'temperature' does not support 0.0 with this model. Only the default (1) value is supported.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': 'unsupported_value'}}",
+      "elapsed_time": 0.5155103206634521,
+      "is_correct": false
+    }
+  ]
+}
