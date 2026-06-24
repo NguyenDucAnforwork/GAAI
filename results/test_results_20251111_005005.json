@@ -1,0 +1,14 @@
+{
+  "accuracy": 0.0,
+  "results": [
+    {
+      "task_id": "46719c30-f4c3-4cad-be07-d5cb21eee6bb",
+      "question": "Of the authors (First M. Last) that worked on the paper \"Pie Menus or Linear Menus, Which Is Better?\" in 2015, what was the title of the first paper authored by the one that had authored prior papers?",
+      "expected": "Mapping Human Oriented Information to Software Agents for Online Systems Usage",
+      "predicted": "[Title of the first paper authored by the specific individual]",
+      "response": "FINAL ANSWER: [Title of the first paper authored by the specific individual]",
+      "elapsed_time": 43.08857011795044,
+      "is_correct": false
+    }
+  ]
+}

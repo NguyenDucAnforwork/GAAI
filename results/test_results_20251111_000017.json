@@ -1,0 +1,14 @@
+{
+  "accuracy": 0.0,
+  "results": [
+    {
+      "task_id": "a1e91b78-d3d8-4675-bb8d-62741b4b68a6",
+      "question": "In the video https://www.youtube.com/watch?v=L1vXCYZAYYM, what is the highest number of bird species to be on camera simultaneously?",
+      "expected": "3",
+      "predicted": "",
+      "response": "The request timed out. Please try a simpler query.",
+      "elapsed_time": 300.01276087760925,
+      "is_correct": false
+    }
+  ]
+}

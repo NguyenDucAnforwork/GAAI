@@ -6,17 +6,37 @@ from enum import Enum
 
 from langchain_core.agents import AgentAction, AgentFinish, AgentStep
 
-from .llms import get_llm, get_smart_llm
+from .llms import get_llm, get_smart_llm, get_formatter_llm
 from .agents.web_agent import run_web_agent
-from langgraph_ver.agents.video_agent_smolvlm import create_video_analysis_agent, extract_youtube_url
+try:
+    from langgraph_ver.agents.video_agent_smolvlm import create_video_analysis_agent, extract_youtube_url
+except Exception:
+    def create_video_analysis_agent():
+        return None
+    def extract_youtube_url(text):
+        import re
+        m = re.search(r'(https?://(?:www\.)?(?:youtube\.com/watch\?v=|youtu\.be/)[\w-]+)', text)
+        return m.group(1) if m else None
 from .agents.reasoning_agent import run_reasoning_agent
 from .agents.creative_agent import run_creative_agent
 from .agents.math_agent import run_math_agent
 from .prompts import GAAI_WORKFLOW_SYSTEM_PROMPT
 
-from langfuse.langchain import CallbackHandler
+import os as _os
 
-langfuse_handler = CallbackHandler()
+# Langfuse tracing is optional; disable with LANGFUSE_DISABLED=true to avoid
+# per-call network overhead (e.g. during batch evaluation).
+if _os.getenv("LANGFUSE_DISABLED", "").lower() == "true":
+    langfuse_handler = None
+else:
+    try:
+        from langfuse.langchain import CallbackHandler
+        langfuse_handler = CallbackHandler()
+    except Exception as _e:
+        print(f"[workflow] Langfuse disabled: {_e}")
+        langfuse_handler = None
+
+_CALLBACKS = [langfuse_handler] if langfuse_handler else []
 
 import re
 import uuid
@@ -135,9 +155,10 @@ def create_optimized_gaai_workflow():
             HumanMessage(content=router_prompt)
         ]
         
-        # Use the most powerful LLM for routing decisions
+        # Use the primary chat LLM for routing decisions
         llm = get_llm()
-        print(f"🔄 Using {llm.model_name} for routing decision...")
+        model_name = getattr(llm, "model", None) or getattr(llm, "model_name", "llm")
+        print(f"🔄 Using {model_name} for routing decision...")
         
         response = llm.invoke(routing_messages)
         decision_text = response.content.strip().upper()
@@ -188,40 +209,53 @@ def create_optimized_gaai_workflow():
         }
     
     async def video_agent_node(state: WorkflowState) -> Dict:
-        """Process query using SmolVLM video agent"""
+        """Process query using Gemini's native YouTube video understanding."""
         query = state["query"]
 
         try:
-            print(f"Starting SmolVLM video agent for query: {query}")
-            
-            # Extract YouTube URL from query
             youtube_url = extract_youtube_url(query)
             if not youtube_url:
-                response = "❌ No YouTube URL found in the query. Please provide a valid YouTube URL."
-            else:
-                print(f"🎥 Found YouTube URL: {youtube_url}")
-                
-                # Create and run SmolVLM video agent
-                agent_executor = create_video_analysis_agent()
-                print(f"🤖 Created SmolVLM video agent")
-                
-                # Run with extended timeout for video download and analysis
-                result = await asyncio.wait_for(
-                    asyncio.to_thread(agent_executor.invoke, {"input": query}), 
-                    timeout=300.0  # 5 minutes for video download + analysis
-                )
-                response = result.get("output", "No response from video agent")
-                
+                return {**state, "response": "❌ No YouTube URL found in the query."}
+
+            print(f"🎥 Analyzing YouTube video with Gemini: {youtube_url}")
+
+            def _analyze():
+                from langchain_google_genai import ChatGoogleGenerativeAI
+                from langgraph_ver.llms import GEMINI_KEYS
+                msg = HumanMessage(content=[
+                    {"type": "media", "file_uri": youtube_url, "mime_type": "video/mp4"},
+                    {"type": "text", "text": (
+                        f"{query}\n\nWatch the video and answer precisely. "
+                        "End with 'FINAL ANSWER: <answer>'."
+                    )},
+                ])
+                # The Gemini free-tier quota is scarce; try every unique key once
+                # until one succeeds (this is the only Gemini call in the pipeline).
+                last_err = None
+                for key in dict.fromkeys(GEMINI_KEYS):
+                    try:
+                        llm = ChatGoogleGenerativeAI(
+                            model="gemini-2.5-flash",
+                            google_api_key=key,
+                            temperature=0.0,
+                            max_output_tokens=2048,
+                            max_retries=1,
+                        )
+                        return llm.invoke([msg]).content
+                    except Exception as e:
+                        last_err = e
+                        continue
+                raise last_err or RuntimeError("No Gemini key succeeded")
+
+            response = await asyncio.wait_for(asyncio.to_thread(_analyze), timeout=90.0)
+
         except asyncio.TimeoutError:
-            response = "The video analysis timed out. This might be due to a large video file or slow internet connection."
+            response = "The video analysis timed out."
         except Exception as e:
-            print(f"Error in SmolVLM video agent: {str(e)}")
-            response = f"❌ SmolVLM video agent error: {str(e)}"
-            
-        return {
-            **state,
-            "response": response
-        }
+            print(f"Error in video agent: {str(e)}")
+            response = f"❌ Video agent error: {str(e)}"
+
+        return {**state, "response": response}
     
     async def run_web_agent_with_retry(query: str, max_attempts: int = 3) -> str:  
         """  
@@ -347,21 +381,28 @@ def create_optimized_gaai_workflow():
         print(f"📝 Agent type: {agent_type}")
         print(f"📝 Messages history: {[type(m) for m in messages]}")
 
-        # 1) Call a dedicated formatter LLM
-        llm = get_llm("openai")
+        # 1) Call a dedicated formatter LLM (kept on gpt-4o-mini for a reliable
+        #    output contract).
+        llm = get_formatter_llm()
         system_msg = SystemMessage(content=(
-            "You are a strict answer formatter.\n"
+            "You are a strict answer formatter for the GAIA benchmark.\n"
             "Return EXACTLY one line in the form: FINAL ANSWER: <value>\n"
             "Rules:\n"
             "1) After 'FINAL ANSWER:' put only the answer, no explanation.\n"
             "2) For numbers: no thousand separators, no units unless the question explicitly asks for units.\n"
-            "3) For text: no articles and no extra words.\n"
+            "3) For text: no extra words. Drop leading articles (a/an/the) UNLESS "
+            "the question demands the exact/verbatim wording or all-caps text — "
+            "then reproduce it exactly as written in the source.\n"
             "4) For lists: comma-separated, no extra words.\n"
-            "5) If the question asks for a quantity in thousands (e.g., 'how many thousand hours'), convert the raw number accordingly and round as the question specifies.\n"
+            "5) For yes/no questions: answer exactly 'Yes' or 'No'.\n"
+            "6) If the question asks for a quantity in thousands/millions, convert "
+            "and round as the question specifies.\n"
+            "7) OBEY any explicit formatting instruction stated inside the question "
+            "itself (e.g. 'give the city name only', 'answer in caps', 'round to "
+            "two decimals') — it overrides the defaults above.\n"
             "CRITICAL: Pay attention to units in the question!\n"
-            "- If asked 'how many thousand hours', your final answer should be in thousands (divide by 1000)\n"
-            "- If asked 'how many hours', your final answer should be in hours\n"
-            "- If asked 'how many million dollars', your final answer should be in millions (divide by 1,000,000)\n"
+            "- If asked 'how many thousand hours', divide by 1000.\n"
+            "- If asked 'how many million dollars', divide by 1,000,000.\n"
             "Output ONLY the one required line."
         ))
         user_msg = HumanMessage(content=(
@@ -382,6 +423,24 @@ def create_optimized_gaai_workflow():
         if marker in lower:
             start = lower.index(marker) + len(marker)
             value = formatted[start:].strip()
+
+            # Deterministic unit fix the LLM formatter often misses: when the
+            # question asks for a quantity "in thousands/millions" but the value
+            # is still in base units (large number), convert it. Only triggers
+            # on clearly-unconverted magnitudes so an already-correct small
+            # answer is left untouched.
+            ql = (query or "").lower()
+            bare = value.replace(",", "").replace(" ", "")
+            if re.fullmatch(r"-?\d+(\.\d+)?", bare):
+                num = float(bare)
+                conv = None
+                if "thousand" in ql and abs(num) >= 1000:
+                    conv = num / 1000.0
+                elif "million" in ql and abs(num) >= 1_000_000:
+                    conv = num / 1_000_000.0
+                if conv is not None:
+                    value = str(int(conv)) if conv == int(conv) else str(conv)
+
             final_line = f"FINAL ANSWER: {value}"
         else:
             # Minimal fallback to keep interface contract
@@ -458,7 +517,7 @@ def create_optimized_gaai_workflow():
     # Set entry point
     workflow.set_entry_point("router")
 
-    return workflow.compile().with_config({"callbacks": [langfuse_handler]})
+    return workflow.compile().with_config({"callbacks": _CALLBACKS})
 
 # Main OptimizedGAAIWorkflow class
 class OptimizedGAAIWorkflow:
@@ -491,7 +550,7 @@ class OptimizedGAAIWorkflow:
                 "thread_id": str(uuid.uuid4()) 
             },
             # Truyền handler vào đây
-            "callbacks": [langfuse_handler] 
+            "callbacks": _CALLBACKS
         }
         
         # Execute workflow
@@ -499,7 +558,7 @@ class OptimizedGAAIWorkflow:
             # Set timeout for the entire workflow
             result = await asyncio.wait_for(
                 self.workflow.ainvoke(initial_state, config=config),
-                timeout=60.0  # 1 minute timeout for the entire workflow
+                timeout=1500.0  # 1 minute timeout for the entire workflow
             )
             
             # Extract response

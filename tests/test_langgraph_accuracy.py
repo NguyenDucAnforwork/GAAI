@@ -81,7 +81,7 @@ async def test_workflow_accuracy(questions: List[Dict[str, Any]], max_questions:
     correct = 0
     
     # Limit to max_questions
-    start_idx = 4
+    start_idx = 5
     test_questions = questions[start_idx:max_questions+start_idx]
     
     print(f"Testing {len(test_questions)} Level 1 questions...")

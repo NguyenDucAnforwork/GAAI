@@ -37,3 +37,13 @@ Pillow
 duckduckgo-search
 google-search-results
 gradio[oauth]
+
+# --- gaia_agent (DeepSeek + Gemini) runtime deps ---
+langchain-openai
+langchain-google-genai
+langchain-community
+langchain-core
+openpyxl
+beautifulsoup4
+PyPDF2
+huggingface-hub

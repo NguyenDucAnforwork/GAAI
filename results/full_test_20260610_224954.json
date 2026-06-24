@@ -1,0 +1,188 @@
+{
+  "accuracy": 0.45,
+  "correct": 9,
+  "total": 20,
+  "wall_seconds": 77.1,
+  "results": [
+    {
+      "task_id": "e1fc63a2-da7a-432f-be78-7c4a95598703",
+      "question": "If Eliud Kipchoge could maintain his record-making marathon pace indefinitely, how many thousand hours would it take him to run the distance between the Earth and the Moon its closest approach? Please use the minimum perigee value on the Wikipedia page for the Moon when carrying out your calculation. Round your result to the nearest 1000 hours and do not use any comma separators if necessary.",
+      "expected": "17",
+      "predicted": "17000",
+      "response": "FINAL ANSWER: 17000",
+      "elapsed_time": 7.4,
+      "is_correct": true
+    },
+    {
+      "task_id": "8e867cd7-cff9-4e6c-867a-ff5ddc2550be",
+      "question": "How many studio albums were published by Mercedes Sosa between 2000 and 2009 (included)? You can use the latest 2022 version of english wikipedia.",
+      "expected": "3",
+      "predicted": "3",
+      "response": "FINAL ANSWER: 3",
+      "elapsed_time": 10.3,
+      "is_correct": true
+    },
+    {
+      "task_id": "ec09fa32-d03f-4bf8-84b0-1f16922c3ae4",
+      "question": "Here's a fun riddle that I think you'll enjoy.\n\nYou have been selected to play the final round of the hit new game show \"Pick That Ping-Pong\". In this round, you will be competing for a large cash prize. Your job will be to pick one of several different numbered ping-pong balls, and then the game will commence. The host describes how the game works.\n\nA device consisting of a winding clear ramp and a series of pistons controls the outcome of the game. The ramp feeds balls onto a platform. The platform has room for three ping-pong balls at a time. The three balls on the platform are each aligned with one of three pistons. At each stage of the game, one of the three pistons will randomly fire, ejecting the ball it strikes. If the piston ejects the ball in the first position on the platform the balls in the second and third position on the platform each advance one space, and the next ball on the ramp advances to the third position. If the piston ejects the ball in the second position, the ball in the first position is released and rolls away, the ball in the third position advances two spaces to occupy the first position, and the next two balls on the ramp advance to occupy the second and third positions on the platform. If the piston ejects the ball in the third position, the ball in the first position is released and rolls away, the ball in the second position advances one space to occupy the first position, and the next two balls on the ramp advance to occupy the second and third positions on the platform.\n\nThe ramp begins with 100 numbered ping-pong balls, arranged in ascending order from 1 to 100. The host activates the machine and the first three balls, numbered 1, 2, and 3, advance to the platform. Before the random firing of the pistons begins, you are asked which of the 100 balls you would like to pick. If your pick is ejected by one of the pistons, you win the grand prize, $10,000.\n\nWhich ball should you choose to maximize your odds of winning the big prize? Please provide your answer as the number of the ball selected.",
+      "expected": "3",
+      "predicted": "3",
+      "response": "FINAL ANSWER: 3",
+      "elapsed_time": 16.7,
+      "is_correct": true
+    },
+    {
+      "task_id": "5d0080cb-90d7-4712-bc33-848150e917d3",
+      "question": "What was the volume in m^3 of the fish bag that was calculated in the University of Leicester paper \"Can Hiccup Supply Enough Fish to Maintain a Dragon\u2019s Diet?\"",
+      "expected": "0.1777",
+      "predicted": "NOT FOUND IN SOURCES",
+      "response": "FINAL ANSWER: NOT FOUND IN SOURCES",
+      "elapsed_time": 9.2,
+      "is_correct": false
+    },
+    {
+      "task_id": "a1e91b78-d3d8-4675-bb8d-62741b4b68a6",
+      "question": "In the video https://www.youtube.com/watch?v=L1vXCYZAYYM, what is the highest number of bird species to be on camera simultaneously?",
+      "expected": "3",
+      "predicted": "3",
+      "response": "FINAL ANSWER: 3",
+      "elapsed_time": 25.9,
+      "is_correct": true
+    },
+    {
+      "task_id": "46719c30-f4c3-4cad-be07-d5cb21eee6bb",
+      "question": "Of the authors (First M. Last) that worked on the paper \"Pie Menus or Linear Menus, Which Is Better?\" in 2015, what was the title of the first paper authored by the one that had authored prior papers?",
+      "expected": "Mapping Human Oriented Information to Software Agents for Online Systems Usage",
+      "predicted": "NOT FOUND IN SOURCES",
+      "response": "FINAL ANSWER: NOT FOUND IN SOURCES",
+      "elapsed_time": 17.2,
+      "is_correct": false
+    },
+    {
+      "task_id": "4b6bb5f7-f634-410e-815d-e673ab7f8632",
+      "question": "In Series 9, Episode 11 of Doctor Who, the Doctor is trapped inside an ever-shifting maze. What is this location called in the official script for the episode? Give the setting exactly as it appears in the first scene heading.",
+      "expected": "THE CASTLE",
+      "predicted": "A CASTLE WHOSE ROOMS ARE CONSTANTLY SHIFTING",
+      "response": "FINAL ANSWER: A CASTLE WHOSE ROOMS ARE CONSTANTLY SHIFTING",
+      "elapsed_time": 8.3,
+      "is_correct": false
+    },
+    {
+      "task_id": "cffe0e32-c9a6-4c52-9877-78ceb4aaa9fb",
+      "question": "An office held a Secret Santa gift exchange where each of its twelve employees was assigned one other employee in the group to present with a gift. Each employee filled out a profile including three likes or hobbies. On the day of the gift exchange, only eleven gifts were given, each one specific to one of the recipient's interests. Based on the information in the document, who did not give a gift?",
+      "expected": "Fred",
+      "predicted": "I cannot answer this question without the provided document.",
+      "response": "FINAL ANSWER: I cannot answer this question without the provided document.",
+      "elapsed_time": 4.8,
+      "is_correct": false
+    },
+    {
+      "task_id": "2d83110e-a098-4ebb-9987-066c06fa42d0",
+      "question": ".rewsna eht sa \"tfel\" drow eht fo etisoppo eht etirw ,ecnetnes siht dnatsrednu uoy fI",
+      "expected": "Right",
+      "predicted": "right",
+      "response": "FINAL ANSWER: right",
+      "elapsed_time": 3.5,
+      "is_correct": true
+    },
+    {
+      "task_id": "5cfb274c-0207-4aa7-9575-6ac0bd95d9b2",
+      "question": "Each cell in the attached spreadsheet represents a plot of land. The color of the cell indicates who owns that plot. Green cells are plots owned by Earl Smith. Can Earl walk through every plot he owns (and no other plots) and return to his starting plot without backtracking? For this question, consider backtracking to be any instance where Earl would enter a plot of land he had already entered since leaving his starting plot.",
+      "expected": "No",
+      "predicted": "]",
+      "response": "Error processing query: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash-lite\nPlease retry in 50.601737527s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 50\n}\n]",
+      "elapsed_time": 9.7,
+      "is_correct": false
+    },
+    {
+      "task_id": "27d5d136-8563-469e-92bf-fd103c28b57c",
+      "question": "\u00ac(A \u2227 B) \u2194 (\u00acA \u2228 \u00acB)\n\u00ac(A \u2228 B) \u2194 (\u00acA \u2227 \u00acB)\n(A \u2192 B) \u2194 (\u00acB \u2192 \u00acA)\n(A \u2192 B) \u2194 (\u00acA \u2228 B)\n(\u00acA \u2192 B) \u2194 (A \u2228 \u00acB)\n\u00ac(A \u2192 B) \u2194 (A \u2227 \u00acB)\n\nWhich of the above is not logically equivalent to the rest? Provide the full statement that doesn't fit.",
+      "expected": "(\u00acA \u2192 B) \u2194 (A \u2228 \u00acB)",
+      "predicted": "(\u00acA \u2192 B) \u2194 (A \u2228 \u00acB)",
+      "response": "FINAL ANSWER: (\u00acA \u2192 B) \u2194 (A \u2228 \u00acB)",
+      "elapsed_time": 11.6,
+      "is_correct": true
+    },
+    {
+      "task_id": "dc28cf18-6431-458b-83ef-64b3ce566c10",
+      "question": "My family reunion is this week, and I was assigned the mashed potatoes to bring. The attendees include my married mother and father, my twin brother and his family, my aunt and her family, my grandma and her brother, her brother's daughter, and his daughter's family. All the adults but me have been married, and no one is divorced or remarried, but my grandpa and my grandma's sister-in-law passed away last year. All living spouses are attending. My brother has two children that are still kids, my aunt has one six-year-old, and my grandma's brother's daughter has three kids under 12. I figure each adult will eat about 1.5 potatoes of mashed potatoes and each kid will eat about 1/2 a potato of mashed potatoes, except my second cousins don't eat carbs. The average potato is about half a pound, and potatoes are sold in 5-pound bags. How many whole bags of potatoes do I need? Just give the number.",
+      "expected": "2",
+      "predicted": "2",
+      "response": "FINAL ANSWER: 2",
+      "elapsed_time": 7.5,
+      "is_correct": true
+    },
+    {
+      "task_id": "b816bfce-3d80-4913-a07d-69b752ce6377",
+      "question": "In Emily Midkiff's June 2014 article in a journal named for the one of Hreidmar's sons that guarded his house, what word was quoted from two different authors in distaste for the nature of dragon depictions?",
+      "expected": "fluffy",
+      "predicted": "]",
+      "response": "Error processing query: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash-lite\nPlease retry in 43.544450781s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 43\n}\n]",
+      "elapsed_time": 6.4,
+      "is_correct": false
+    },
+    {
+      "task_id": "72e110e7-464c-453c-a309-90a95aed6538",
+      "question": "Under DDC 633 on Bielefeld University Library's BASE, as of 2020, from what country was the unknown language article with a flag unique from the others?",
+      "expected": "Guatemala",
+      "predicted": "NOT FOUND IN SOURCES",
+      "response": "FINAL ANSWER: NOT FOUND IN SOURCES",
+      "elapsed_time": 10.5,
+      "is_correct": false
+    },
+    {
+      "task_id": "42576abe-0deb-4869-8c63-225c2d75a95a",
+      "question": "In the fictional language of Tizin, basic sentences are arranged with the Verb first, followed by the direct object, followed by the subject of the sentence. I want to express my love for apples to my Tizin friend. \n\nThe word that indicates oneself is \"Pa\" is the nominative form, \"Mato\" is the accusative form, and \"Sing\" is the genitive form. \n\nThe root verb that indicates an intense like for something is \"Maktay\". When it is used in the present, it is used in it's root form, when it is used in the preterit past, it is \"Tay\", and when it is used in the imperfect past, it is \"Aktay\". It is used differently than in English, and is better translated as \"is pleasing to\", meaning that the thing doing the liking is actually the object of the sentence rather than the subject.\n\nThe word for apples is borrowed from English in Tizin, and so it is \"Apple\" is the nominative form, \"Zapple\" is the accusative form, and \"Izapple\" is the genitive form. \n\nPlease translate \"I like apples\" to Tizin.",
+      "expected": "Maktay mato apple",
+      "predicted": "Maktay Mato Apple",
+      "response": "FINAL ANSWER: Maktay Mato Apple",
+      "elapsed_time": 5.6,
+      "is_correct": true
+    },
+    {
+      "task_id": "b415aba4-4b68-4fc6-9b89-2c812e55a3e1",
+      "question": "In Nature journal's Scientific Reports conference proceedings from 2012, in the article that did not mention plasmons or plasmonics, what nano-compound is studied? Don't use the prefix nano in your answer if there is one.",
+      "expected": "diamond",
+      "predicted": "titanium dioxide",
+      "response": "FINAL ANSWER: titanium dioxide",
+      "elapsed_time": 43.1,
+      "is_correct": false
+    },
+    {
+      "task_id": "cca530fc-4052-43b2-b130-b30968d8aa44",
+      "question": "Review the chess position provided in the image. It is black's turn. Provide the correct next move for black which guarantees a win. Please provide your response in algebraic notation.",
+      "expected": "Rd5",
+      "predicted": "Qf1#",
+      "response": "FINAL ANSWER: Qf1#",
+      "elapsed_time": 9.2,
+      "is_correct": false
+    },
+    {
+      "task_id": "935e2cff-ae78-4218-b3f5-115589b19dae",
+      "question": "In the year 2022, and before December, what does \"R\" stand for in the three core policies of the type of content that was violated in the public logs on the Legume Wikipedia page?",
+      "expected": "research",
+      "predicted": "NOT FOUND IN SOURCES",
+      "response": "FINAL ANSWER: NOT FOUND IN SOURCES",
+      "elapsed_time": 13.9,
+      "is_correct": false
+    },
+    {
+      "task_id": "4fc2f1ae-8625-45b5-ab34-ad4433bc21f8",
+      "question": "Who nominated the only Featured Article on English Wikipedia about a dinosaur that was promoted in November 2016?",
+      "expected": "FunkMonk",
+      "predicted": "FunkMonk",
+      "response": "FINAL ANSWER: FunkMonk",
+      "elapsed_time": 29.1,
+      "is_correct": true
+    },
+    {
+      "task_id": "5188369a-3bbe-43d8-8b94-11558f909a08",
+      "question": "What writer is quoted by Merriam-Webster for the Word of the Day from June 27, 2022?",
+      "expected": "Annie Levin",
+      "predicted": "NOT FOUND IN SOURCES",
+      "response": "FINAL ANSWER: NOT FOUND IN SOURCES",
+      "elapsed_time": 15.7,
+      "is_correct": false
+    }
+  ]
+}

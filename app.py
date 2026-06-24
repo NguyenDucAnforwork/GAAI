@@ -5,7 +5,7 @@ import inspect
 import pandas as pd
 import asyncio
 
-from langgraph_ver.workflow import OptimizedGAAIWorkflow
+from gaia_agent.orchestrator import GaiaAgent
 
 from dotenv import load_dotenv, find_dotenv
 
@@ -63,7 +63,7 @@ def run_and_submit_all( profile: gr.OAuthProfile | None):
 
     # 1. Instantiate Agent ( modify this part to create your agent)
     try:
-        agent = OptimizedGAAIWorkflow()
+        agent = GaiaAgent()
     except Exception as e:
         print(f"Error instantiating agent: {e}")
         return f"Error initializing agent: {e}", None
@@ -92,8 +92,9 @@ def run_and_submit_all( profile: gr.OAuthProfile | None):
         print(f"An unexpected error occurred fetching questions: {e}")
         return f"An unexpected error occurred fetching questions: {e}", None
 
-    async def answer(agent, query):
-        response = await agent.process_query(query)
+    async def answer(agent, query, file_name, task_id):
+        # GaiaAgent uses file_name + task_id to fetch/handle attachments.
+        response = await agent.process_query(query, file_name, task_id)
         return response
 
     # 3. Run your Agent
@@ -103,12 +104,13 @@ def run_and_submit_all( profile: gr.OAuthProfile | None):
     for item in questions_data:
         task_id = item.get("task_id")
         question_text = item.get("question")
+        file_name = item.get("file_name", "") or ""
         if not task_id or question_text is None:
             print(f"Skipping item with missing task_id or question: {item}")
             continue
         try:
             # submitted_answer = agent(question_text)
-            submitted_answer = asyncio.run(answer(agent, question_text))
+            submitted_answer = asyncio.run(answer(agent, question_text, file_name, task_id))
             answers_payload.append({"task_id": task_id, "submitted_answer": extract_final_answer(submitted_answer)})
             results_log.append({"Task ID": task_id, "Question": question_text, "Submitted Answer": submitted_answer})
         except Exception as e:
